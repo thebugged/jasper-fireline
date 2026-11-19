@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fireline: Jasper 2024</title>
+  <meta name="description" content="The July 2024 Jasper wildfire in 3D, built from Sentinel-2 satellite imagery, fire hotspot detections and OpenStreetMap.">
+  <meta property="og:title" content="Fireline: Jasper 2024">
+  <meta property="og:description" content="The July 2024 Jasper wildfire in 3D, built from satellite imagery.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 26 13 9l5 9 3-5 7 13z' fill='%23ff7a2f'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Figtree:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    { "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/addons/" } }
+  </script>
+</head>
+<body>
+  <canvas id="scene" aria-label="3D model of the Athabasca valley around Jasper. Drag to rotate, scroll to zoom."></canvas>
+
+  <div id="labels" aria-hidden="true"></div>
+  <div id="tooltip" role="status" hidden></div>
+  <div id="clock" aria-live="off" hidden></div>
+
+  <header class="top">
+    <a class="brand" href="#valley"><span class="mark" aria-hidden="true"></span>Fireline</a>
+    <nav class="chapters" aria-label="Chapters">
+      <a href="#valley" data-chapter="valley"><span>01</span>The valley</a>
+      <a href="#run" data-chapter="run"><span>02</span>The run</a>
+      <a href="#town" data-chapter="town"><span>03</span>The town</a>
+    </nav>
+    <div class="views" role="group" aria-label="Image">
+      <button type="button" data-view="tc" aria-pressed="true">True colour</button>
+      <button type="button" data-view="ir" aria-pressed="false">Infrared</button>
+    </div>
+    <label class="layer"><input type="checkbox" id="sev-toggle"> Burn severity</label>
+    <button class="sources-btn" type="button" aria-haspopup="dialog" aria-controls="sources">Data</button>
+  </header>
+
+  <!-- 01 The valley -->
+  <section class="panel" id="panel-valley" data-chapter="valley" aria-labelledby="h-valley">
+    <p class="kicker">01 · Before</p>
+    <h1 id="h-valley">The Athabasca valley, summer 2024</h1>
+    <p class="lede">Jasper sits where three valleys meet, ringed by peaks and wrapped in lodgepole pine. This block is about 43 by 46&nbsp;km of it, from Pyramid Mountain in the north to Athabasca Falls in the south.</p>
+    <p>Years of mountain pine beetle had left large stands of dead, dry pine along the valley floor. By late July the forest was as dry as it gets.</p>
+    <div class="seeing" aria-live="polite"></div>
+    <p>Step through the satellite passes along the bottom. Until 22 July the valley barely changes. Then jump to 1 August.</p>
+  </section>
+
+  <!-- 02 The run -->
+  <section class="panel" id="panel-run" data-chapter="run" aria-labelledby="h-run" hidden>
+    <p class="kicker">02 · 22–24 July</p>
+    <h1 id="h-run">Two days to the townsite</h1>
+    <p class="lede">Fires started north and south of town on the evening of 22 July. Wind drove the southern fire up the valley, and two days later it reached Jasper.</p>
+    <ol class="events">
+      <li><time>22 Jul, 7:02 pm</time><span>Fire reported north of town, near the Jasper Transfer Station</span></li>
+      <li><time>~7:10 pm</time><span>A second fire near Kerkeslin Campground, south of town; more follow nearby</span></li>
+      <li><time>Overnight</time><span>Gusts up to 87&nbsp;km/h merge the southern fires and push them north. Over 3,000&nbsp;ha burn within hours</span></li>
+      <li><time>22–23 Jul</time><span>More than 25,000 residents, workers and visitors evacuated</span></li>
+      <li class="hot"><time>24 Jul, ~6 pm</time><span>The fire climbs the Whistlers' slopes; embers fall on the southwest corner of town</span></li>
+      <li><time>17 Aug · 7 Sep</time><span>Declared held, then under control</span></li>
+    </ol>
+    <button class="replay" type="button">Replay the heat detections</button>
+    <p class="small">Each dot is a satellite heat detection (fire hotspot) between 22 and 24 July, shown when it was recorded.</p>
+    <div class="seeing" aria-live="polite"></div>
+    <h2>How much burned</h2>
+    <dl class="stats">
+      <div><dt>Burned area from the satellite passes (this project)</dt><dd><span data-stat="burned">–</span><small>km²</small></dd></div>
+      <div><dt>Official mapped perimeter (NBAC)</dt><dd><span data-stat="nbac">–</span><small>km²</small></dd></div>
+      <div><dt>Share burned at high severity</dt><dd><span data-stat="high">–</span><small>%</small></dd></div>
+    </dl>
+    <figure class="chart">
+      <svg id="area-chart" role="img" aria-labelledby="chart-title"></svg>
+      <figcaption id="chart-title">Burned area seen in each clear satellite pass, km². The dashed line is the official perimeter.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 03 The town -->
+  <section class="panel" id="panel-town" data-chapter="town" aria-labelledby="h-town" hidden>
+    <p class="kicker">03 · 24 July, evening</p>
+    <h1 id="h-town">What stood in the way</h1>
+    <p class="lede">358 of Jasper's 1,113 structures were lost. Crews saved the other 70%, including the hospital, the schools and the wastewater plant.</p>
+    <div class="seeing" aria-live="polite"></div>
+    <dl class="stats">
+      <div><dt>Mapped buildings in and around the townsite</dt><dd data-stat="town">–</dd></div>
+      <div><dt>…within 50&nbsp;m of burned ground</dt><dd data-stat="d50">–</dd></div>
+      <div><dt>…within 200&nbsp;m</dt><dd data-stat="d200">–</dd></div>
+    </dl>
+    <p>Burned ground here means forest and open land whose burn index dropped sharply between 20 July and 5 September, read at Sentinel-2's full 10&nbsp;m resolution. The worst losses were on the west and southwest edges, where the forest runs right up to the houses.</p>
+    <p class="small">Distance to burned ground measures exposure, not damage: a house can burn with no scorched forest next to it, and roofs barely register in the burn index. Building outlines are from OpenStreetMap.</p>
+  </section>
+
+  <footer class="timeline" aria-label="Satellite passes">
+    <div class="timeline-head">
+      <p class="timeline-title" id="timeline-title">Sentinel-2 passes, summer 2024. Pick one to see it.</p>
+      <p class="fire-key"><span aria-hidden="true"></span>Fire burning, 22 Jul until under control 7 Sep</p>
+    </div>
+    <div class="track" id="track" role="radiogroup" aria-labelledby="timeline-title"></div>
+  </footer>
+
+  <dialog id="sources" aria-labelledby="sources-h">
+    <h2 id="sources-h">Data and method</h2>
+    <p>Imagery is Sentinel-2 Level-2A surface reflectance, resampled to a 1,024&nbsp;px grid (~42&nbsp;m). Burn is measured with the Normalized Burn Ratio, NBR&nbsp;=&nbsp;(NIR&nbsp;−&nbsp;SWIR)&nbsp;/&nbsp;(NIR&nbsp;+&nbsp;SWIR): a median of six clear passes before the fire is compared with a median of four after it (dNBR), and pixels with dNBR above 0.27 count as burned. Everything is built by the Python scripts in <code>pipeline/</code>.</p>
+    <ul id="source-list"></ul>
+    <form method="dialog"><button type="submit">Close</button></form>
+  </dialog>
+
+  <div id="intro">
+    <div class="intro-inner">
+      <p class="intro-kicker">Jasper National Park · July 2024</p>
+      <h1>The fire that reached Jasper</h1>
+      <p>A 3D look at the 2024 Jasper wildfire, built from satellite imagery: what the valley looked like, how fast the fire ran, and what stood in its way.</p>
+      <button type="button" id="enter" disabled>Loading the valley…</button>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
