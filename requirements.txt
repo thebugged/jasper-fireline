@@ -1,0 +1,13 @@
+numpy
+pandas
+scipy
+matplotlib
+rasterio
+pystac-client
+shapely>=2.0
+pyproj
+pyshp
+pillow
+jupyter
+plotly
+osmium

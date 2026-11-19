@@ -12,3 +12,5 @@ Builds everything in `../data/` from public sources. Run the steps in order from
 | 5 | `build.py` | Burn indices, burned area per pass, severity map, textures, hotspot list, building distances → `data/story.json` |
 
 Downloads and intermediates go to `raw/` (git-ignored, about 400 MB). Settings such as the study area and grid size are in `config.py`.
+
+The walkthrough of the analysis (with charts and validation) is in `../analysis.ipynb`.

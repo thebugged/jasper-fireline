@@ -174,7 +174,7 @@ def main():
             if tb[0] <= lon <= tb[2] and tb[1] <= lat <= tb[3]:
                 x = int((lon - tb[0]) / (tb[2] - tb[0]) * tw)
                 y = int((tb[3] - lat) / (tb[3] - tb[1]) * th)
-                b["dist_m"] = int(dist_m[min(y, th - 1), min(x, tw - 1)])
+                b["dist_m"] = int(round(float(dist_m[min(y, th - 1), min(x, tw - 1)])))
                 b["town"] = True
             else:
                 b["town"] = False

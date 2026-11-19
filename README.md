@@ -8,6 +8,7 @@
   <div>
     <img src="https://img.shields.io/badge/-Python-black?style=for-the-badge&logoColor=white&logo=python&color=3776AB" alt="python" />
     <img src="https://img.shields.io/badge/-NumPy-black?style=for-the-badge&logoColor=white&logo=numpy&color=013243" alt="numpy" />
+    <img src="https://img.shields.io/badge/-Jupyter-black?style=for-the-badge&logoColor=white&logo=jupyter&color=F37626" alt="jupyter" />
     <img src="https://img.shields.io/badge/-Rasterio-black?style=for-the-badge&logoColor=white&logo=python&color=4B8BBE" alt="rasterio" />
     <img src="https://img.shields.io/badge/-Three.js-black?style=for-the-badge&logoColor=white&logo=threedotjs&color=000000" alt="threejs" />
     <img src="https://img.shields.io/badge/-JavaScript-black?style=for-the-badge&logoColor=white&logo=javascript&color=F7DF1E" alt="javascript" />
@@ -38,14 +39,18 @@ Burn is measured with the Normalized Burn Ratio, `NBR = (NIR − SWIR) / (NIR + 
 
 The satellite estimate of the burned area is **302 km²**. The official mapped perimeter is **316 km²**.
 
-The web app has no build step: plain HTML, CSS and an ES module (`main.js`), with three.js vendored in `vendor/`. Everything it loads is in `data/` (about 5 MB), produced by the scripts in `pipeline/`.
+The project runs in three stages:
+1. **`analysis.ipynb`**: the exploration. It downloads the data and works out the method: choosing usable passes, building the burn index, picking the threshold, validating against the official perimeter (93% overlap), the hotspot timeline, and why the town chapter measures exposure rather than damage.
+2. **`pipeline/`**: the settled method as scripts that build the files the app loads, in `data/` (about 5 MB).
+3. **The web app**: plain HTML, CSS and an ES module (`main.js`), with three.js vendored in `vendor/`. No build step.
 
 ## Setup & Installation
 **Prerequisites**
 
 Ensure the following are installed;
 - [Git](https://git-scm.com/)
-- [Python 3.10+](https://www.python.org/downloads/) (only needed to rebuild the data)
+- [Python 3.10+](https://www.python.org/downloads/) (for the notebook and pipeline)
+- [Jupyter Notebook](https://jupyter.org/install) (or install the Jupyter extension on [Visual Studio Code](https://code.visualstudio.com/)) to open `analysis.ipynb`
 
 <br/>
 To set up this project locally, follow these steps:
@@ -59,6 +64,11 @@ git clone https://github.com/thebugged/jasper-fireline.git
 ```shell
 cd jasper-fireline
 ```
+
+3. Install the required dependencies (only needed for the notebook and pipeline):
+```shell
+pip install -r requirements.txt
+```
 <br/>
 
 ## Running the application
@@ -68,17 +78,19 @@ python3 -m http.server 8000
 ```
 The application will be available in your browser at http://localhost:8000.
 
-2. Alternatively, rebuild the data from scratch (downloads ~250 MB of imagery, takes about 10 minutes):
+2. To see how the data was analysed, open and run `analysis.ipynb` (downloads ~400 MB into `data_raw/` on first run, about 10 minutes).
+
+3. To rebuild the app's data from scratch:
 ```shell
-pip install -r pipeline/requirements.txt
 cd pipeline
+python cwfis.py   # fire hotspots and the official perimeter
 python s2.py      # Sentinel-2 passes onto one grid
 python dem.py     # elevation
 python osm.py     # buildings, roads, rail
 python town.py    # 10 m close-up of the townsite
 python build.py   # indices, textures and data/story.json
 ```
-`build.py` also needs the CWFIS 2024 hotspots and NBAC perimeter in `pipeline/raw/`. Download links are in `pipeline/README.md`.
+
 
 ## Limits
 - The main grid is ~42 m per pixel, so single buildings only show in the 10 m town close-up.
