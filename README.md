@@ -1,6 +1,6 @@
 <div align="center">
   <br />
-    <a href="#">
+    <a href="https://jasperfire.netlify.app">
       <img src="images/banner.png" alt="Fireline banner">
     </a>
   <br />
@@ -12,7 +12,6 @@
     <img src="https://img.shields.io/badge/-Rasterio-black?style=for-the-badge&logoColor=white&logo=python&color=4B8BBE" alt="rasterio" />
     <img src="https://img.shields.io/badge/-Three.js-black?style=for-the-badge&logoColor=white&logo=threedotjs&color=000000" alt="threejs" />
     <img src="https://img.shields.io/badge/-JavaScript-black?style=for-the-badge&logoColor=white&logo=javascript&color=F7DF1E" alt="javascript" />
-    <img src="https://img.shields.io/badge/-Netlify-black?style=for-the-badge&logoColor=white&logo=netlify&color=00C7B7" alt="netlify" />
   </div>
 
   <h3 align="center">Fireline: Jasper 2024</h3>
