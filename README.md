@@ -7,11 +7,11 @@
 
   <div>
     <img src="https://img.shields.io/badge/-Python-black?style=for-the-badge&logoColor=white&logo=python&color=3776AB" alt="python" />
-    <img src="https://img.shields.io/badge/-NumPy-black?style=for-the-badge&logoColor=white&logo=numpy&color=013243" alt="numpy" />
-    <img src="https://img.shields.io/badge/-Jupyter-black?style=for-the-badge&logoColor=white&logo=jupyter&color=F37626" alt="jupyter" />
     <img src="https://img.shields.io/badge/-Rasterio-black?style=for-the-badge&logoColor=white&logo=python&color=4B8BBE" alt="rasterio" />
+    <img src="https://img.shields.io/badge/-PySTAC-black?style=for-the-badge&logoColor=white&color=2C5E8F" alt="pystac" />
+    <img src="https://img.shields.io/badge/-Shapely-black?style=for-the-badge&logoColor=white&color=4E7A3A" alt="shapely" />
     <img src="https://img.shields.io/badge/-Three.js-black?style=for-the-badge&logoColor=white&logo=threedotjs&color=000000" alt="threejs" />
-    <img src="https://img.shields.io/badge/-JavaScript-black?style=for-the-badge&logoColor=white&logo=javascript&color=F7DF1E" alt="javascript" />
+    <img src="https://img.shields.io/badge/-Jupyter-black?style=for-the-badge&logoColor=white&logo=jupyter&color=F37626" alt="jupyter" />
   </div>
 
   <h3 align="center">Fireline: Jasper 2024</h3>
